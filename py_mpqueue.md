@@ -8,6 +8,12 @@ well until I have used `multiprocessing.Queue` for inter-process communication.
 
 Take a look at the following code:
 
+    import multiprocessing
+    import threading
+    import os
+    import time
+    import sys
+
     queue = multiprocessing.Queue()
 
     def receive():
