@@ -61,12 +61,12 @@ thread on the first invocation of `Queue.put()`. The thread is used to send
 messages to a pipe, so that the caller of `Queue.put()` can return immediately.
 This is good for most cases, but it also raises a problem - mixing threads with
 `fork` is complicated. Threads in the parent process will be all dead except for
-the main thread. Hence when I call `queue.put("before fork")`, a thread is be
+the main thread. Hence when I call `queue.put("before fork")`, a thread is
 created, and it becomes dead in the child process after `os.fork()`. No thread
-will be working to send the messages to pipe.
+will be working to send the messages to pipe in the child process.
 
 There could be two solutions to this problem. The first one is to invoke
-`queue._after_fork()` in the beginning of the child process. For example:
+`queue._after_fork()` at the beginning of the child process. For example:
 
     if pid == 0:
         queue._after_fork()
@@ -77,6 +77,6 @@ will create a new thread to send messages.
 
 The second solution is to use `multiprocessing.queues.SimpleQueue` instead.
 `SimpleQueue` is simply a wrapper of a pipe and a lock, without any thread
-created. Hence it is safe to be used with `fork()`. The advantage is that the
+created. Hence it is safe to be used with `fork()`. The disadvantage is that the
 invocation of `SimpleQueue.put()` will not return until the message has been
 sent, but it should not be a problem in my case.
