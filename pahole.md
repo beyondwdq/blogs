@@ -14,6 +14,9 @@ However, compiling it on Ubuntu needs some efforts. I forked it to applied some
 patch and notes: https://github.com/beyondwdq/pahole . Pls refer to my latest commits
 on the forked repository, and follow the README to install it.
 
+Pls note if you don't want to install it, the executable `pahole` is generated in the current
+directory. You can directly run it with `./pahole`
+
 Usage
 =====
 
